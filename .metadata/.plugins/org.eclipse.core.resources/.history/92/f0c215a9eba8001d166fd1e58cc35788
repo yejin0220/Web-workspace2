@@ -1,0 +1,66 @@
+package com.kh.member.controller;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class LoginController
+ */
+@WebServlet("/login.me")
+public class LoginController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public LoginController() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		/*
+		 * <HttpServletRequest 객체와 HttpServletResponse 객체>
+		 * -request : 서버로 요청할 때의 정보들이 담겨있음(요청시 전달한 값, 전송방식 등)
+		 * -response : 요청에 대해 응답할때 필요한 객체
+		 * 
+		 * <GET방식과 POST방식의 차이점>
+		 * -GET 방식  : 사용자가 입력한 값들이 url에 노출	 / 데이터 길이 제한이 있음  / 즐겨찾기 기능상 편리
+		 * -POST 방식 : 사용자가 입력한 값들이 url에 노출 안됨 / 데이터 길이 제한이 없음 / 대신 TimeOut이 존재 
+		 */
+		
+		//1)전달값에 한글이 있을 경우 인코딩 처리해야함(POST방식일 경우에만)
+		request.setCharacterEncoding("UTF-8");
+		
+		//2)요청시 전달값을 꺼내서 변수 or 객체에 기록
+		String userId = request.getParameter("userId");
+		String userPwd = request.getParameter("userPwd");
+		
+		//3)해당 요청을 처리하는 서비스 클래스의 메소드를 호출
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+
+}

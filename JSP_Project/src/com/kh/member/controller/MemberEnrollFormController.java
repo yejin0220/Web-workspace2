@@ -30,9 +30,7 @@ public class MemberEnrollFormController extends HttpServlet {
 		//포워딩 방식
 		request.getRequestDispatcher("views/member/memberEnrollForm.jsp").forward(request, response);
 		
-		
-		
-		
+
 		
 		
 	}

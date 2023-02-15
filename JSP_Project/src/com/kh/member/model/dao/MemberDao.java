@@ -200,7 +200,64 @@ public class MemberDao {
 	}
 	
 	
+	public int updatePwdMember(Connection conn, String userId, String userPwd, String updatePwd) {
+		//UPDATE문 => DML문 // 처리된 행의 갯수 반환
+		
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updatePwdMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, updatePwd);
+			pstmt.setString(2, userId);
+			pstmt.setString(3, userPwd);
+		
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+			
+		}
+		
+		return result;
+		
+		
+	}
 	
+	
+	public int deleteMember(Connection conn, String userId, String userPwd) {
+		
+		
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("deleteMember");
+		
+		try {
+			pstmt = conn.prepareCall(sql);
+			
+			pstmt.setString(1, userId);
+			pstmt.setString(2, userPwd);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(conn);
+		}
+		
+		return result;
+		
+		
+		
+	}
 	
 	
 	

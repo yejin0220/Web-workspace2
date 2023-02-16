@@ -63,7 +63,12 @@ public class Notice {
 		this.noticeWriter = noticeWriter;
 		this.createDate = createDate;
 	}
-
+	
+	public Notice( String noticeTitle, String noticeContent, String noticeWriter) {
+		this.noticeTitle = noticeTitle;
+		this.noticeContent = noticeContent;
+		this.noticeWriter = noticeWriter;
+	}
 
 
 	public int getNoticeNo() {

@@ -32,7 +32,7 @@
 		<!-- 공지사항 게시판의 게시판은 관리자만 작성이 가능함 -->
 		<% if(loginUser != null && loginUser.getUserId().equals("admin")){ %>
 			
-			<div align="center" style="width:850px">
+			<div align="right" style="width:850px">
 				<a href="<%= contextPath %>/enrollForm.no" class="btn btn-secondary">글작성</a>	
 			</div>
 			
@@ -112,6 +112,7 @@
 				
 				//클릭했을때 해당 공지사항의 번호를 가지고 올 수 있어야 함
 				//this = tr태그
+				//nno => 글번호 : tr태그의 자식들인 td태그 중에서 0번째에 있는 td의 텍스트만 가지고 옴 
 				let nno = $(this).children().eq(0).text();
 				
 				//GET방식으로 요청시 URL뒤에 ?를 붙여서 파라미터를 함께 전송할 수 있음

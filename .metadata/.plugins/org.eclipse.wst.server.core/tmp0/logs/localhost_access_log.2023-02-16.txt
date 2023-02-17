@@ -225,3 +225,5 @@
 0:0:0:0:0:0:0:1 - - [16/Feb/2023:14:54:20 +0900] "GET /jspproject/updateForm.no?nno=7 HTTP/1.1" 200 4415
 127.0.0.1 - - [16/Feb/2023:14:54:33 +0900] "GET /jspproject/updateForm.no?nno=7 HTTP/1.1" 200 4415
 0:0:0:0:0:0:0:1 - - [16/Feb/2023:14:55:02 +0900] "GET /jspproject/updateForm.no?nno=7 HTTP/1.1" 200 4415
+127.0.0.1 - - [16/Feb/2023:15:06:33 +0900] "GET / HTTP/1.1" 404 807
+0:0:0:0:0:0:0:1 - - [16/Feb/2023:15:06:35 +0900] "GET /jspproject/update.no?nno=7&title=qwer&content=qwer HTTP/1.1" 404 831

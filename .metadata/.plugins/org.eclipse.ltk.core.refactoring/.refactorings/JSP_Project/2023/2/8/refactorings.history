@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;JSP_Project/src/com/kh/borard/controller/boardDetailController.java&apos; to &apos;BoardDetailController.java&apos;" description="Rename resource &apos;boardDetailController.java&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/com/kh/borard/controller/boardDetailController.java" name="BoardDetailController.java" stamp="1676872938491" updateReferences="true"/>
+</session>

@@ -21,7 +21,7 @@
 		<h2 align="center">공지사항 작성하기</h2>
 		<br>
 		
-		<form id="enroll-form" action="<%=contextPath %>/insert.no" method="post">
+		<form id="enroll-form" action="<%=contextPath %>/insert.bo" method="post">
 			<input type="hidden" name="userNo" value="<%= loginUser.getUserNo() %>">
 			<!-- 현재 로그인한 유저의 정보를 알아내는 방법 중 2번째 방법
 				1. hidden 타입의 input태그로 현재 세션에 있는 loginUser정보를 담아주는 방법. -->

@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.borard.model.service.BoardService;
+import com.kh.borard.model.vo.Attachment;
+import com.kh.borard.model.vo.Board;
 
 /**
  * Servlet implementation class boardDetailController
@@ -33,35 +35,35 @@ public class BoardDetailController extends HttpServlet {
 		
 		
 		
-		int bno = Integer.parseInt(request.getParameter("bno"));
+		int boardNo = Integer.parseInt(request.getParameter("bno"));
 		
-		int result = new BoardService().selectBoard(bno);
 		
-		if(result >0 ) {
+		
+		BoardService bService = new BoardService();
+		
+		//조회수 증가 / 게시글 조회(Board)/첨부파일 조회(Attachment)
+		int result = bService.increaseCount(boardNo);
+		
+		if(result >0 ) {//조회수 증가 성공시 => 게시글 정보, 첨부파일을 조회해서 request영역안에 담은 후에, 상세 페이지로 포워딩
+			Board b = bService.selectBoard(boardNo);
+			Attachment at = bService.selectAttachment(boardNo);
 			
-			request.setAttribute("bno", bno);
-			request.getRequestDispatcher("view/board/boardDetailView.jsp").forward(request, response);
+			request.setAttribute("b", b);
+			request.setAttribute("at", at);
 			
-		}else {
+			request.getRequestDispatcher("views/board/boardDetailView.jsp").forward(request, response);
+		
+		}else { //조회수 증가 실패시
+			
 			request.setAttribute("errorMsg", "게시글 조회 실패");
 			request.getRequestDispatcher("view/common/errorPage.jsp").forward(request, response);
+			
 		}
 		
-	}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		
 	}
+				
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

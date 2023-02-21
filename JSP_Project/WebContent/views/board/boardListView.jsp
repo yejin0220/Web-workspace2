@@ -77,40 +77,31 @@
 				<%} %>
 				
 				
-				<!-- <tr>
-					<td>10</td>
-					<td>운동</td>
-					<td>제목~~</td>
-					<td>user01</td>
-					<td>100</td>
-					<td>2023-02-17</td>
-				</tr>
-				<tr>
-					<td>11</td>
-					<td>운동</td>
-					<td>제목~~</td>
-					<td>user01</td>
-					<td>100</td>
-					<td>2023-02-17</td>
-				</tr>
-				<tr>
-					<td>12</td>
-					<td>운동</td>
-					<td>제목~~</td>
-					<td>user01</td>
-					<td>100</td>
-					<td>2023-02-17</td>
-				</tr>
-				<tr>
-					<td>13</td>
-					<td>운동</td>
-					<td>제목~~</td>
-					<td>user01</td>
-					<td>100</td>
-					<td>2023-02-17</td>
-				</tr> -->
+				
 			</tbody>
 		</table>
+		
+		<script>
+			$(function(){
+				
+				$(".list-area>tbody>tr").click(function(){
+					
+					//클릭시 해당 게시글의 글번호를 알아와야 함.
+					//tr요소의 자손 중 첫번째 td태그의 영역안의 내용을 가져올 예정 
+					let bno = $(this).children().eq(0).text();
+					//현재 내가 클릭한 tr태그의 자손들 중 0번째에 위치한 자식의 textNode값을 가져온다
+				
+					//요청할 url -> get방식 : url?키=밸류&&키=밸류...
+					//물음표뒤의 내용을 쿼리 스트링이라고 부름 => 직접 만들어서 넘겨줘야 함	
+					location.href='<%=contextPath%>/detail.bo?bno='+bno;
+					
+				
+				});
+				
+			});
+		
+		
+		</script>
 		
 		<br><br>
 		

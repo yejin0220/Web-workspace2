@@ -49,21 +49,61 @@
 		VALUES(SEQ_FNO.NEXTVAL, SEQ_BNO.CURRVAL, ?,?,?)
 	</entry>
 
-
+	<entry key="increaseCount">
+		UPDATE BOARD
+		SET COUNT = COUNT+1
+		WHERE BOARD_NO = ?
+		 AND  STATUS = 'Y'
+	</entry>
 	
 	<entry key="selectBoard">
-		SELECT CATEGORY_NAME, 
+		SELECT BOARD_NO,
+			   CATEGORY_NAME, 
 			   BOARD_TITLE,
-			   BOARD_WRITER,
-			   CREATE_DATE,
-			   BOARD_CONTENT
+			   BOARD_CONTENT,
+			   USER_ID,
+			   CREATE_DATE	   
 		FROM   BOARD B
-		JOIN   CATEGORY C USING(CATEGORY_NO)
+		JOIN   CATEGORY USING(CATEGORY_NO)
 		JOIN   MEMBER M ON(BOARD_WRITER = USER_NO)
-		WHERE  B.TYPE = 1
+		WHERE  BOARD_NO = ?
 		 AND   B.STATUS = 'Y'
 	</entry>
-
+	
+	<entry key ="selectAttachment">
+		SELECT FILE_NO,
+			   ORIGIN_NAME,
+			   CHANGE_NAME,
+			   FILE_PATH,
+			   NVL(FILE_LEVEL,0) AS FILE_LEVEL
+		FROM ATTACHMENT
+		WHERE REF_BNO = ?
+		ORDER BY FILE_LEVEL	
+	</entry>
+	
+	<entry key="updateBoard">
+		UPDATE BOARD
+		SET    BOARD_TITLE = ?,
+			   BOARD_CONTENT = ?
+	    WHERE BOARD_NO = ? AND STATUS='Y'
+	 </entry>
+	 
+	 <entry key="updateAttachment">
+	 	UPDATE ATTACHMENT
+	 	SET    FILE_NO,
+	 		   ORIGIN_NAME,
+	 		   CHANGE_NAME,
+	 		   FILE_PATH
+	 	WHERE FILE_NO = ?
+	 </entry>
+	 
+	 
+	 <entry key="insertAttachmentTwo">
+	 	INSERT INTO ATTACHMENT(FILE_NO, REF_BNO, ORIGIN_NAME, CHANGE_NAME, FILE_PATH)
+		VALUES(SEQ_FNO.NEXTVAL, ?,?,?,?)
+	 </entry>
+	 
+	 
 
 
 

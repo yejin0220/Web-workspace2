@@ -84,23 +84,79 @@ public class BoardService {
 		
 	}
 	
-	
-	public Board selectBoard(int bno) {
+	public int increaseCount(int boardNo) {
 		
 		Connection conn = getConnection();
 		
-		Board b = new BoardDao().selectBoard(conn, bno);
+		int result = new BoardDao().increaseCount(conn, boardNo);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+		
+	}
+	
+	
+	public Board selectBoard(int boardNo) {
+		
+		Connection conn = getConnection();
+		
+		Board b = new BoardDao().selectBoard(conn, boardNo);
 		
 		close(conn);
 		
 		return b;
 		
-		
-		
-		
+
 		
 	}
 	
+	public Attachment selectAttachment(int boardNo) {
+		
+		Connection conn = getConnection();
+		
+		Attachment at = new BoardDao().selectAttachment(conn, boardNo);
+		
+		close(conn);
+		
+		return at;
+		
+	}
+	
+	
+	public int updateBoard(Board b, Attachment at) {
+		Connection conn = getConnection();
+		
+		int result1 = new BoardDao().updateBoard(conn, b);
+		int result2 = 1;
+		
+		
+		if( at!= null && at.getFileNo() != 0) {
+			result2 = new BoardDao().updateAttachment(conn, at);
+		}else {
+			result2 = new BoardDao().insertAttachmentTwo(conn,at);
+		}
+		
+		
+		if(result1 >0 &&  result2>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result1*result2;
+		
+		
+	
+		
+	}
 	
 	
 	

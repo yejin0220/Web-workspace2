@@ -32,7 +32,7 @@
 	      <br>
 	      
 	      <form action="<%= contextPath %>/update.bo" id="update-form" method="post" enctype="multipart/form-data">
-	      	<input type="hidden" name="bno" value="<%= b.getBoardNo() %>">
+	      	<input type="hidden" name="bno" value="<%= b.getBoardNo()%>">
 	         <!-- 카테고리, 제목,내용, 첨부파일을 입력받고, 작성자정보  -->
 	         <table align="center">
 		         <tr>
@@ -44,13 +44,28 @@
 		            <td width="500">
 		               <select name="category">
 		               	<% for (Category c : list){ %>
-		               	
+		               		
 		               		<option value="<%= c.getCategoryNo()%>"><%= c.getCategoryName() %></option>
 		               	
 		               	<% } %>
 		               
 		                <!-- 내가 선택한 카테고리가 자동으로 선택되어 있도록 작업해주기(js활용) -->
 		               </select>
+		               <script>
+			               	$(function(){
+			               		$("#update-form option").each(function(){
+			               			/*
+			               				현재 반복을 진행중인 option태그의 text값과
+			               				db에서 가져온 categoryname값이 일치하는 경우 선택되도록
+			               			*/
+			               			
+			               			if($(this).text() == "<%= b.getCategory()%>"){
+			               				//일치하는 경우에만 option태그를 선택 상태로 변경
+			               				$(this).attr("selected", true);
+			               			}
+			               		})	
+			               	})
+		               </script>
 		            </td>
 		         </tr>
 		         <tr>

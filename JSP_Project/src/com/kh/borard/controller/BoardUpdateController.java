@@ -42,15 +42,15 @@ public class BoardUpdateController extends HttpServlet {
 		
 		//필요한 데이터를 담아서 boardUpdate.jsp로 포워딩 시켜주기
 		
-		int bno = Integer.parseInt(request.getParameter("bno"));
-		
-		Board b = new BoardService().selectBoard(bno);
-		Attachment at = new BoardService().selectAttachment(bno);
-		ArrayList<Category> list = new ArrayList();
-		
+		int boardNo = Integer.parseInt(request.getParameter("bno"));
+		Board b = new BoardService().selectBoard(boardNo);
+		Attachment at = new BoardService().selectAttachment(boardNo);
+		ArrayList<Category> list = new BoardService().selectCatrgoryList();
 		
 		
+		request.setAttribute("list", list);
 		request.setAttribute("b", b);
+		request.setAttribute("at", at);
 		request.getRequestDispatcher("views/board/boardUpdateForm.jsp").forward(request, response);
 		
 		
@@ -81,26 +81,22 @@ public class BoardUpdateController extends HttpServlet {
 			
 			
 			//3 : 본격적으로 sql문 실행시 필요한 값들 셋팅
-			// 3. DB에 기록할 데이터들을 뽑아서 Attachment객체에 담기(첨부파일 저장), Board객체에 각각 담아주기
-			// - 카테고리 번호, 제목, 내용, 작성자번호르 뽑아서 Board에 Insert
-			// - 넘어온 첨부파일이 있다면, 원본명, 수정명, 폴더의 경로를 뽑아서 Attachment테이블에 Insert
+			//board테이블에 update시 필요한 값들 셋팅
+			int boardNo = Integer.parseInt(multi.getParameter("bno").trim());
 			String category = multi.getParameter("category");
 			String title = multi.getParameter("title");
 			String content = multi.getParameter("content");
 			
-			String boardWriter = ((Member)request.getSession().getAttribute("loginUser")).getUserNo()+"";
-			
 			Board b = new Board();
+			b.setBoardNo(boardNo);
 			b.setCategory(category);
 			b.setBoardTitle(title);
 			b.setBoardContent(content);
-			b.setBoardWriter(boardWriter);
-			
-			
 			
 			
 			//if문으로 새롭게 전달한 첨부파일이 있는 경우에만 at변수에 필요한 값을 추가할 것
 			Attachment at = null;
+			
 			if(multi.getOriginalFileName("upfile") != null) {
 				
 				at = new Attachment();
@@ -141,38 +137,24 @@ public class BoardUpdateController extends HttpServlet {
 			int result = new BoardService().updateBoard(b, at);
 			
 			if(result > 0) {
-				response.sendRedirect(request.getContextPath()+"/list.bo");
 				
+				request.getSession().setAttribute("alertMsg", "성공적으로 수정되었습니다.");
+				response.sendRedirect(request.getContextPath()+"/detail.bo?bno="+boardNo);
+	
 				
 			}else {
 				
-				request.setAttribute("errorMsg", "게시글 조회 실패");
+				request.setAttribute("errorMsg", "게시글 수정 실패");
 				request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 			}
 			
-		}else {
+			}else {
 			request.setAttribute("errorMsg", "전송방식이 잘못되었습니다.");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 			
+			}
+		
+	
 		}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	}
 
 }

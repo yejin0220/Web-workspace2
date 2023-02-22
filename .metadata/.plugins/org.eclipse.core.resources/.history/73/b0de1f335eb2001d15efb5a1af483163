@@ -1,0 +1,50 @@
+<%@ page import ="java.util.ArrayList, com.kh.borard.model.vo.Board" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+ <%
+ 	ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
+ %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	.outer{
+		height : 800px;
+	}
+
+ 	.list-area{
+ 		width:760px;
+ 		margin : auto;
+ 	}
+</style>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

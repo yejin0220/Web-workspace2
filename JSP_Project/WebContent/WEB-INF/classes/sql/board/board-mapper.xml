@@ -83,28 +83,49 @@
 	
 	<entry key="updateBoard">
 		UPDATE BOARD
-		SET    BOARD_TITLE = ?,
+		SET    CATEGORY_NO =?,
+			   BOARD_TITLE = ?,
 			   BOARD_CONTENT = ?
 	    WHERE BOARD_NO = ? AND STATUS='Y'
 	 </entry>
 	 
 	 <entry key="updateAttachment">
 	 	UPDATE ATTACHMENT
-	 	SET    FILE_NO,
-	 		   ORIGIN_NAME,
-	 		   CHANGE_NAME,
-	 		   FILE_PATH
+	 	SET    ORIGIN_NAME = ?,
+	 		   CHANGE_NAME = ?,
+	 		   FILE_PATH = ?,
+	 		   UPLOAD_DATE = SYSDATE
 	 	WHERE FILE_NO = ?
 	 </entry>
 	 
 	 
-	 <entry key="insertAttachmentTwo">
+	 <entry key="insertNewAttachment">
 	 	INSERT INTO ATTACHMENT(FILE_NO, REF_BNO, ORIGIN_NAME, CHANGE_NAME, FILE_PATH)
-		VALUES(SEQ_FNO.NEXTVAL, ?,?,?,?)
+		VALUES(SEQ_FNO.NEXTVAL, ?, ?, ?, ?)
 	 </entry>
 	 
+	 <entry key="deleteBoard">
+	 	UPDATE BOARD
+	 	SET STATUS='N'
+	 	WHERE BOARD_NO = ?
+	 	AND BOARD_WRITER = ?  <!-- 로그인한 유저와 작성자 정보가 동일할 때 삭제할 수 있도록 -->
+	 </entry>
 	 
-
+	 <entry key="deleteAttachment">
+	 	DELETE FROM ATTACHMENT
+	 	WHERE REF_BNO = ? 
+	 </entry>
+	
+	<entry key="insertThumbnailBoard">
+		INSERT INTO BOARD(BOARD_NO, BOARD_TYPE, BOARD_TITLE, BOARD_CONTENT, BOARD_WRITER)
+		VALUES (SEQ_BNO.NEXTVAL, 2, ?, ? ,?)
+	</entry>
+	
+	<entry key="insertAttachmentList">
+		INSERT INTO ATTACHMENT(FILE_NO, REF_BNO, ORIGIN_NAME, CHANGE_NAME, FILE_PATH, FILE_LEVEL)
+		VALUES(SEQ_FNO.NEXTVAL, SEQ_BNO.CURRVAL, ?,?,?,?)
+	
+	</entry>
 
 
 

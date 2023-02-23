@@ -505,5 +505,39 @@ public class BoardDao {
 	}
 	
 	
+	public ArrayList<Board> selectThumbnailList(Connection conn){
+		
+		ArrayList<Board> list = new ArrayList<>(); //board타입 객체를 만들어서 값을 담고 반환시켜줄 예정
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectThumbnailBoard");
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Board b = new Board();
+					b.setBoardNo(rset.getInt("BOARD_NO"));
+					b.setBoardTitle(rset.getString("BOARD_TITLE"));
+					b.setCount(rset.getInt("COUNT"));
+					b.setTitleImg(rset.getString("CHANGE_NAME"));
+					
+					list.add(b);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+		
+		
+	}
+	
 	
 }

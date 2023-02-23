@@ -108,17 +108,7 @@ public class ThumbnailInsertController extends HttpServlet {
 		}
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+			
 	}
 
 }

@@ -4,7 +4,7 @@
 <%
    
 
-ArrayList<Board> list = (ArrayList<Board>) request.getAttribute("list");
+	ArrayList<Board> list = (ArrayList<Board>) request.getAttribute("list");
 %>
 <!DOCTYPE html>
 <html>
@@ -29,47 +29,37 @@ ArrayList<Board> list = (ArrayList<Board>) request.getAttribute("list");
       <br> <h2 style="text-align:center;">사진게시판</h2> <br>
       
       <% if(loginUser != null) { %>
-         <div style="right"" style="width:860px">
+         <div align="right" style="width:860px">
             <a href ="<%= contextPath %>/insert.th" class="btn btn-secondary">글작성</a>
             <br><br>
          </div>
       <% } %>
       <div class="list-area">
-         <div class="thumbnail" align="center">
-            <input type="hidden" value="1">
-            <img src = "<%=contextPath %>/resources/thumb_upfiles/animal1.gif" width="200px" height="150px">
-            <p>
-               NO.1 첫번제 글제목<br>
-               조회수 : 1
+                      
+               <%if(list.isEmpty()){ %>
+               	 	<div  class="thumbnail" align="center"> 조회된 리스트 없어</div>
+               	 	
+               <%}else{ %>
+               		<%for(Board b : list){ %>
+               			<div class="thumbnail" align="center">
+				            <input type="hidden" value="<%=b.getBoardNo()%>">
+				            <img src = "<%=contextPath %>/resources/thumb_upfiles/<%=b.getTitleImg()%>" width="200px" height="150px">
+				            <p>
+				               NO.<%=b.getBoardNo() %><%=b.getBoardTitle() %><br>
+				               조회수 : <%=b.getCount() %>
+				            
+				            </p>
+			          </div>
+               		<%} %>
+               <%} %>
             
-            </p>
-          </div>
-          <div class="thumbnail" align="center">
-            <input type="hidden" value="2">
-            <img src = "<%=contextPath %>/resources/thumb_upfiles/animal2.gif" width="200px" height="150px">
-            <p>
-               NO.2 두번제 글제목<br>
-               조회수 : 2
-            
-            </p>
-          </div>
-          <div class="thumbnail" align="center">
-            <input type="hidden" value="3">
-            <img src = "<%=contextPath %>/resources/thumb_upfiles/animal3.gif" width="200px" height="150px">
-            <p>
-               NO.3 세번제 글제목<br>
-               조회수 : 3
-            
-            </p>
-          </div>
-      
       </div>
    
    </div>
 
 	   <script>
 	   $(function(){
-	      $(".thumbnail").click(function({
+	      $(".thumbnail").click(function(){
 	         location.href = "<%= contextPath %>/detail.th?bno="+$(this).children().eq(0).val();
 	      })   
 	   });

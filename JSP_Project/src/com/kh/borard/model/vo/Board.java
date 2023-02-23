@@ -3,17 +3,7 @@ package com.kh.borard.model.vo;
 import java.sql.Date;
 
 public class Board {
-	
-//	BOARD_NO
-//	BOARD_TYPE
-//	CATEGORY_NO
-//	BOARD_TITLE
-//	BOARD_CONTENT
-//	BOARD_WRITER
-//	COUNT
-//	CREATE_DATE
-//	STATUS
-	
+		
 	private int boardNo;
 	private	int boardType;
 	private String category;  //CATEGORY_NO :  게시글 작성시 번호를 그대로 받는 경우와 조회 시 카테고리명(category_name)으로 조회하는 케이스
@@ -25,6 +15,7 @@ public class Board {
 	private String status;
 	
 	private String titleImg;
+	
 	
 	public Board() {
 		super();

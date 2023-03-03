@@ -58,14 +58,6 @@ public class AjaxFileUploadController extends HttpServlet {
 			System.out.println(originName +"|||"+changeName);
 		}
 		
-		
-	
-	
-	
-	
-	
-	
-	
 	
 	}
 

@@ -214,66 +214,316 @@
 	<hr>
 	<br>
 	
-<h3> 2. 버튼 클릭시 post방식으로 서버에 데이터 전송 및 응답</h3>
-   
-   이름 : <input type="text" id="input2_1" > <br>
-   나이 : <input type="number" id="input2_2"> <br>
-   <button onclick="test2();">전송</button>
-   <br>
-   
-   <!-- required속성은 input type="submit" 버튼에만 속성이 적용됨 -->
-   
-   응답 : <label id="output2">응답 대기중...</label>
-   
-   <script>
-         // 버전 1) 문자열데이터 응답받기
-         
-         function test2(){
-            
-       <%--      $.ajax({
-               url : "<%=contextPath%>/jqAjax.do",
-               data : {
-                  name : $("#input2_1").val(),
-                  age : $("#input2_2").val()
-               },
-               type : 'post',
-               success : function(result){
-            	$("#output2").text(result);
-            	
-            	$("#input2_1").val();
-            	$("#input2_2").val();
-               },
-               error : function(){
-            	   console.log("통신실패")
-               }
-            }) --%>
-            
-            //버전2)JSON데이터 응답받기
-            	$.ajax({
-            		
-            		 url : "<%=contextPath%>/jqAjax2.do",
-                     data : {
-                        name : $("#input2_1").val(),
-                        age : $("#input2_2").val()
-                     },
-                     type : 'post',
-            		 success : function(result){
-            		 	console.log(result);
-            		 	
-            		 	//JSONArray로 응답받는 경우
-            		 	//$("#output2").text("이름 : "+result[0]+", 나이 : "+result[1]);
-            		 	
-            		 	//JSONObject로 응답받는 경우 : {name : "예진", age : "29"}
-            			$("#output2").text("이름 : "+result.name+", 나이 : "+result.age );
-            		 	
-            		 },
-            		 error : function(){
-            			 
-            			 console.log("통신실패");
-            		 }
-            	})
-         }
-</script>
+		<h3> 2. 버튼 클릭시 post방식으로 서버에 데이터 전송 및 응답</h3>
+		   
+		   이름 : <input type="text" id="input2_1" > <br>
+		   나이 : <input type="number" id="input2_2"> <br>
+		   <button onclick="test2();">전송</button>
+		   <br>
+		   
+		   <!-- required속성은 input type="submit" 버튼에만 속성이 적용됨 -->
+		   
+		   응답 : <label id="output2">응답 대기중...</label>
+		   
+		   <script>
+		         // 버전 1) 문자열데이터 응답받기
+		         
+		         function test2(){
+		            
+		       <%--      $.ajax({
+		               url : "<%=contextPath%>/jqAjax.do",
+		               data : {
+		                  name : $("#input2_1").val(),
+		                  age : $("#input2_2").val()
+		               },
+		               type : 'post',
+		               success : function(result){
+		            	$("#output2").text(result);
+		            	
+		            	$("#input2_1").val();
+		            	$("#input2_2").val();
+		               },
+		               error : function(){
+		            	   console.log("통신실패")
+		               }
+		            }) --%>
+		            
+		            //버전2)JSON데이터 응답받기
+		            	$.ajax({
+		            		
+		            		 url : "<%=contextPath%>/jqAjax2.do",
+		                     data : {
+		                        name : $("#input2_1").val(),
+		                        age : $("#input2_2").val()
+		                     },
+		                     type : 'post',
+		            		 success : function(result){
+		            		 	console.log(result);
+		            		 	
+		            		 	//JSONArray로 응답받는 경우
+		            		 	//$("#output2").text("이름 : "+result[0]+", 나이 : "+result[1]);
+		            		 	
+		            		 	//JSONObject로 응답받는 경우 : {name : "예진", age : "29"}
+		            			$("#output2").text("이름 : "+result.name+", 나이 : "+result.age );
+		            		 	
+		            		 },
+		            		 error : function(){
+		            			 
+		            			 console.log("통신실패");
+		            		 }
+		            	})
+		         }
+		</script>
+		
+		<h3>3. 서버로 데이터전송 후, 조회된 객체를 응답데이터로 받기</h3>
+		
+		회원번호 입력 : <input type="number" id="input3">
+		<button onclick="test3();">조회</button>
+		
+		<div id="output3"></div>
+		
+		<script>
+			function test3(){
+				
+				$.ajax({
+					
+					url :"jqAjax3.do",
+					data : { no : $("#input3").val()},
+					success : (result) => {
+						console.log(result);
+						
+						let resultStr = "회원번호 : "+result.userNo+"<br>"
+										+"이름 : "  +result.userName+"<br>"
+										+"아이디 : " +result["userId"]+"<br>"
+										+"주소 : "+result["address"]+"<br>"
+						
+						$("#output3").html(resultStr);
+						
+					},
+					error : function(req, status, error){
+						console.log(req, status, error);
+					}
+				})
+			}
+		
+		</script>
+		
+		<h3>4. 응답데이터로 여러개의 객체들이 담겨있는 ArrayList받기</h3>
+		
+		<button onclick="test4();">회원정보조회</button>
+		
+		<table id="output4" border="1" style="text-align:center">
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>이름</th>
+					<th>아이디</th>
+					<th>주소</th>
+				</tr>
+			</thead>
+			<tbody>
+			
+			</tbody>
+		</table>
+		
+		<script>
+			function test4(){
+				
+				$.ajax({
+					
+					url : "<%=contextPath%>/jqAjax4.do",
+					success : function(result){
+						let str = "";
+						
+						for(let i=0; i<result.length; i++){
+							str += "<tr>"
+								+ "<td>"+result[i].userNo+"</td>" //번호
+								+ "<td>"+result[i].userName+"</td>" //이름
+								+ "<td>"+result[i]["userId"]+"</td>" //아이디
+								+ "<td>"+result[i]["address"]+"</td>" //주소
+							str + "</tr>";
+						}
+						
+						$("#output4 tbody").html(str);
+					}
+				});
+			}
+		
+		</script>
+		
+		<h2>5. ajax를 활용한 자동 완성 기능 구현</h2>
+		<input id="keyword" list="list" type="text" placeholder="찾을 게시글을 작성하세요">
+		
+		<datalist id="list"></datalist>
+		
+		<script>
+			$(function(){
+				$("#keyword").keyup(function(e){
+					$.ajax({
+						url: "<%=contextPath%>/jqAutoSearch.do",
+						data : {keyword : $("#keyword").val()},
+						success : function(data){
+														
+							$("#list").html(""); //리스트 비워주기
+							console.log(data);
+							
+							let str ="";
+							for(let i=0; i<data.length; i++){
+								
+								str += "<option>"
+								     +  data[i].boardTitle
+								     + "</option>"
+							}
+							
+							$("#list").html(str);
+						}
+					})					
+				})
+			});
+		</script>
+		
+		<h2>6. Ajax로 html 파일 받아오기</h2>
+		
+		<button id="htmlAjax">html 문서 받기</button>
+		<div id="htmloutput"></div>
+		
+		<script >
+			$(function(){
+				$("#htmlAjax").click(function(){
+					$.ajax({
+						url : "<%=contextPath%>/jqHtmlTest.do",
+						type : "post",
+						dataType : "html", //=> 없어도 스스로 html파일임을 인식함, 에러 발생 방지를 위해 명시적으로 작성해주는것이 좋음
+						success : function(data){
+							console.log(data);
+							$("#htmloutput").html(data);
+						}
+						
+					})
+				})
+			})
+		
+		</script>
+		
+		<h2>7. xml 데이터 가져오기</h2>	
+		<button id="xmlTest">xml데이터 가져오기</button>
+		<div id="fiction">
+			<h2>소설</h2>
+			<table id="fiction-info">
+			</table>
+			
+			<h2>프로그래밍</h2>
+			<table id="it-info">
+			</table>
+		</div>
+		
+		<script>
+		
+			$(function(){
+				$("#xmlTest").click( () => {
+					$.ajax({
+						url : "books.xml", //단순히 xml파일을 불러올 경우 -> 아파치가 파일 자체를 전달해줌
+						success : function(data){ //data -> 해당 xml파일
+							 
+							let ficheader = "<tr><th>제목</th><th>저자</th></tr>";
+							let itheader = ficheader;
+							console.log(data);
+							
+							//let entity = $(data).find("books");
+							let entity = $(data).find(":root"); //시작을 가지고 올 수 있는 선택자 함수
+							console.log(entity);
+							
+							let books = $(entity).find("book");
+							console.log(books);
+							
+							books.each( function(index, item){
+								let info = "<tr>"
+									     + "<td>"+$(item).find("title").text()+"</td>"
+									     + "<td>"+$(item).find("author").text()+"</td>"
+									     + "</tr>";
+									     
+								let subject = $(item).find("subject").text();
+								if(subject == "소설"){
+									
+									ficheader += info;
+									
+								}else if(subject == "프로그래밍"){
+									itheader += info;
+									
+								}
+									
+							})
+							
+							$("#fiction-info").html(ficheader);
+							$("#it-info").html(itheader);
+							
+						}
+					});	
+				});
+			});
+		</script>
+		
+		<h2>8. Ajax를 이용한 파일 업로드 처리 하기</h2>
+		
+		<input type="file" id="upfile" multiple>
+		<button onclick="sendFile();">파일전송</button>
+		
+		<script>
+			function sendFile(){
+				//파일 전송시에는 FormData라는 객체를 생성해서 파일을 추가시켜줘야함(단순히 객체형태로 넘겨주면 안됨)
+				let form = new FormData();
+				
+				/* console.log($("#upfile"[0]), $("#upfile")[0].files[0]);
+				form.append("upfile", $("#upfile")[0].files[0]); */
+				
+				$.each($("#upfile")[0].files, function(index, file){
+					console.log(index, file);
+					form.append("upfile"+index, file);
+				});
+				
+				
+				
+				$.ajax({
+					url : "<%=contextPath%>/fileUpload.do",
+					data : form,
+					type : "post", //파일로 보낼경우 post방식으로 바꿔주기  
+					processData : false, //서버로 보내는 값에 대한 형태 설정 여부(기본데이터 원하는 경우 false)
+					contentType : false, //데이터 인코딩 방식
+					success : function(){
+						alert("업로드 성공");
+						$("#upfile").val("");
+					}
+				});
+			}
+		</script>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>

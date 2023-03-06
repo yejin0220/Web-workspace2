@@ -1,6 +1,6 @@
 package com.kh.member.controller;
 
-import java.io.IOException; 
+import java.io.IOException;  
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.kh.member.model.service.MemberService;
 import com.kh.member.model.vo.Member;
-import com.kh.member.service.MemberService;
 
 /**
  * Servlet implementation class LoginController

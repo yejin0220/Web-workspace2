@@ -91,8 +91,8 @@
 	            <br><br>
 	            
 	            <div align="center">
-	            	<button type="submit">회원가입</button>
-	            	<buttom type="reset">초기화</buttom>
+	            	<button type="submit" disabled>회원가입</button>
+	            	<button type="reset">초기화</button>
 	            </div>
 	            
 	             <br><br>
@@ -100,6 +100,58 @@
 		
 		</form>
 	</div>
+	<script>
+	
+		function idCheck(){
+			//아이디를 입력하는 input요소 얻어오기
+			//name이 userId인 요소가 menubar.jsp에서도 존재하므로, 확실하게 어디에 속해있는지 잘 적어줘야 한다.
+			//#enroll-form인 후손 중, 첫번째 userId값만 가지고 오기
+			const $userId = $("#enroll-form [name=userId]");
+			
+			$.ajax({
+				url:"<%=contextPath%>/idCheck.me",
+				data : {userId : $userId.val() },
+				success : function(result){
+					
+					
+					if(result == 'NNNNN'){
+						
+						//이미 존재하는 아이디 인경우
+						alert("이미 존재하거나 회원탈퇴한 아이디입니다.");
+						//다시 입력할 수 있도록..
+						$userId.focus();
+						
+					}else{
+						
+						//사용가능한 경우
+						if(confirm("사용가능한 아이디입니다. 사용하시겠습니까?")){
+							
+							//아이디값을 수정할 수 없도록 막기
+							$userId.attr("readonly", true); //아이디값 확정짓기
+							
+							//회원가입 버튼 활성화
+							//막아두는 속성 : disabled
+							//removeAttr("disabled") : 막아두는 속성 지워주고 회원가입 버튼 활성화
+							$("#enroll-form :submit").removeAttr("disabled");
+							
+							
+							
+						}else{
+							//아이디 사용안함
+							$userId.val("");
+							$userId.focus();
+							
+						}
+					}
+				},
+				error : function(){
+					
+					console.log("아이디 중복체크 실패");
+				}
+			});
+			
+		}
+	</script>
 	
 	
 	

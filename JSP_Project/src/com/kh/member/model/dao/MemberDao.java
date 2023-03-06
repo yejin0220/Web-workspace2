@@ -241,7 +241,7 @@ public class MemberDao {
 		String sql = prop.getProperty("deleteMember");
 		
 		try {
-			pstmt = conn.prepareCall(sql);
+			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, userId);
 			pstmt.setString(2, userPwd);
@@ -259,6 +259,45 @@ public class MemberDao {
 		
 	}
 	
+	
+	public int idCheck(Connection conn, String userId) {
+		
+		//SELECT문 실행 -> 결과값은 무조건 한행만 나오도록
+		
+		int count = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("idCheck");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, userId);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				//다음행이 존재한다면 1을 반환(중복되는 아이디가 존재한다면) / 존재 하지 않는다면 0의 값을 반환
+				//next()의 시작위치는 column의 0번째 위치에서 값이 있을 경우 다음 위치인 1번으로 이동
+				//select일때마아아아안!!!!
+				count = rset.getInt(1);
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(conn);
+			
+		}
+		
+		return count;
+		
+	}
 	
 	
 	

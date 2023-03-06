@@ -1,6 +1,6 @@
 package com.kh.borard.model.dao;
 
-import static com.kh.common.JDBCTemplate.close;
+import static com.kh.common.JDBCTemplate.close; 
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -16,6 +16,7 @@ import java.util.Properties;
 import com.kh.borard.model.vo.Attachment;
 import com.kh.borard.model.vo.Board;
 import com.kh.borard.model.vo.Category;
+import com.kh.borard.model.vo.Reply;
 import com.kh.common.model.vo.PageInfo;
 
 public class BoardDao {
@@ -539,5 +540,68 @@ public class BoardDao {
 		
 	}
 	
+	public ArrayList<Attachment> selectAttachmentList(Connection conn, int boardNo){
+			
+			ArrayList<Attachment> list = new ArrayList();
+			
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			
+			String sql = prop.getProperty("selectAttachment");
+			 
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, boardNo);
+				
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					Attachment at = new Attachment();
+					
+					at.setChangeName(rset.getString("CHANGE_NAME"));
+					at.setFilePath(rset.getString("FILE_PATH"));
+					at.setFileLevel(rset.getInt("FILE_LEVEL"));
+					
+					list.add(at);
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
+			}
+			
+			return list;
+		}
+	
+	public int insertReply(Connection conn, Reply r) {
+		
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("insertReply");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, r.getReplyCotent());
+			pstmt.setInt(2, r.getReplyBno());
+			pstmt.setInt(3, Integer.parseInt(r.getReplyWriter()));
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+
 	
 }

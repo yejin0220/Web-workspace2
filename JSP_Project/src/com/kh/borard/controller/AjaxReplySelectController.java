@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.kh.borard.model.service.BoardService;
 import com.kh.borard.model.vo.Reply;
 
 /**
@@ -32,12 +33,15 @@ public class AjaxReplySelectController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		//반환되는 데이터 -> 배열형식의 데이터 => json으로 전달
+		
 		int bno = Integer.parseInt(request.getParameter("bno"));
 		
-		ArrayList<Reply> list = new ArrayList();
+		ArrayList<Reply> list = new BoardService().selectReplyList(bno);
 		
+		
+		//Gson을 이용해서 응답 ArrayList -> JsonArray로 변환
 		response.setContentType("application/json; charset=UTF-8");
-		
 		
 		new Gson().toJson(list, response.getWriter());
 		

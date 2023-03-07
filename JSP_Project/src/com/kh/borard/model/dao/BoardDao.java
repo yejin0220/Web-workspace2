@@ -602,6 +602,43 @@ public class BoardDao {
 		
 	}
 	
+	public ArrayList<Reply> selectReplyList(Connection conn, int bno){
+		
+		ArrayList<Reply> list = new ArrayList();
+		
+		PreparedStatement pstmt = null;
+		
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectReply");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, bno);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+					list.add( new Reply(
+					rset.getInt("REPLY_NO"),
+					rset.getString("REPLY_CONTENT"),
+					rset.getString("USER_ID"),
+					rset.getString("CREATE_DATE")
+			   ));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+		
+		
+	}
+	
 
 	
 }

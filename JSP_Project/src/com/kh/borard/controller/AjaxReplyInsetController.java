@@ -32,27 +32,31 @@ public class AjaxReplyInsetController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		//비동기속성에서 data에 사용자가 작성한 key값 사용하기
 		String content = request.getParameter("content");
 		int bno = Integer.parseInt(request.getParameter("bno"));
 		String writer = ((Member)request.getSession().getAttribute("loginUser")).getUserNo()+""; 
-		//int userNo = ((Member)request.getSession().getAttribute("loginUser")).getUserNo(); 
+		
 		
 		Reply r = new Reply();
 		r.setReplyCotent(content);
 		r.setReplyBno(bno);
 		r.setReplyWriter(writer);
 		
+		
 		ReplyBuilder rb = new ReplyBuilder.Builder(1).setReplyContent("댓글내용").setRefBno(1).build();
+		
+		
 		
 		int result = new BoardService().insertReply(r);
 		response.getWriter().print(result);
-	
+		
+		
 		
 		
 	
-	
-	
-	
+			
+		
 	}
 
 	/**

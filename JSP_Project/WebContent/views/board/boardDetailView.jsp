@@ -1,11 +1,12 @@
-<%@ page import="com.kh.borard.model.vo.*" %>
+<%@ page import="com.kh.borard.model.vo.*, java.util.ArrayList" %>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	Reply r = (Reply)request.getAttribute("r");
+	
 	Board b = (Board)request.getAttribute("b");
 	Attachment at =(Attachment)request.getAttribute("at");
+	ArrayList<Reply> list = (ArrayList<Reply>)request.getAttribute("list");
 %>
 
 <!DOCTYPE html>
@@ -117,17 +118,33 @@
                 <% } %>
              </thead>
              <tbody>
-                <tr>
+             	<% for(Reply r : list){ %>
+           			<tr>
+           				<td><%=r.getReplyWriter() %></td>
+           				<td><%=r.getReplyCotent() %></td>
+           				<td><%=r.getCreateDate() %></td>
+           			</tr>  	
+             	
+             	
+             	<%} %>
+             
+           <!--      <tr>
                    <td>작성자</td>
-                   <td>댓글내용</td>
+                   <td>댓글 내용</td>
                    <td>작성일</td>
-                </tr>
+                </tr> -->
              </tbody>
           </table>
       </div>
    </div>
    
    <script>
+   		$(function(){
+   			setInterval(selectReplyList, 1000); //내가 원하는 함수를 원하는 시간마다 호출하는것
+   												//1초마다 댓글리스트를 호출해서 실시간으로 입력되는 댓글 목록을 보여줌
+   			
+   		});
+   		
    		function insertReply(){
    			$.ajax({
    				
@@ -144,7 +161,7 @@
    						selectReplyList();
    						
    						//댓글 내용 비워주기
-   						$("#replyContent").html("");
+   						$("#replyContent").val("");
    					}else{
    						
    						//댓글 등록 실패시 result =0
@@ -169,8 +186,14 @@
    					let result = "";
    					for(let i of list){
    						
+   						result += "<tr>"
+   								+"<td>"+i.replyWriter+"</td>"
+   								+"<td>"+i.replyCotent+"</td>"
+   								+"<td>"+i.createDate+"</td>"
+   								+"</tr>"
    						
    					}
+   					$("#reply-area tbody").html(result);
    				},
    				error : function(){
    					console.log("게시글 목록 조회 실패")

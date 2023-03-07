@@ -100,7 +100,8 @@
 				</tr>
 				<tr>
 					<th colspan="2">
-						<button>로그인</button>
+						<input type="checkbox" id="saveId"><label for="saveId">아이디저장</label>
+						<button type="button" onclick="submitLogin();">로그인</button>
 						<button type="button" onclick="enrollPage();">회원가입</button>
 					</th>
 				</tr>
@@ -116,8 +117,53 @@
 				location.href = "<%= contextPath %>/enrollForm.me";
 				
 			}
-		
-		
+			
+			   function submitLogin(){
+		            
+		            let userId = $("#login-form input[name=userId]").val();
+		            
+		            if($("#saveId").is(":checked")) { // true 체크된 상태
+		               document.cookie = "saveId="+userId+"; path=/; max-age="+60*60*24; // 쿠키최대 유지시간 설정(1일)
+		               
+		            } else{//체크하지 않고 로그인시, 저장된 쿠키를 삭제
+		            	document.cookie ="saveId=; path=/; max-age=0"; //최대시간을 0으로 설정해서 해당 쿠키를 제거해주기
+		               
+		            }
+		            
+		            
+		            $("#login-form").submit();            
+		         }
+				
+			   function getCookie(){
+				   
+				   let value = "";
+				   
+				   if(document.cookie.length > 0){
+					    let index = document.cookie.indexOf("saveId=");
+					    if(index != -1){ // saveId라는 키값의 쿠키가 있다면
+					    	
+					    	index += "saveId=".length;
+					    	//index += "saveId=".length; : 불필요한 값을 제거하기위해 내가뽑아쓸 글자 수 만큼 길이를 늘린것?
+					    	//							 : 없으면 saveId=admin으로 값이 찍힘							
+					    	let end = document.cookie.indexOf(";",index);
+					    	
+					    	if(end == -1){ //쿠키배열에서 saveId가 마지막위치에 있을때
+					    		value = document.cookie.substring(index);
+					    		
+					    	}else{
+					    		value = document.cookie.substring(index, end); 
+					    	}
+					    	
+					    	$("#login-form input[name=userId]").val(value);
+					    	$("#saveId").attr("checked",true);
+					    	
+					    }
+				   }
+			   }
+			   
+			   $(function(){
+				   getCookie();
+			   })
 		</script>
 		<% } else{ %>
 			<!-- 로그인 성공 후 보여질 화면 -->
@@ -136,7 +182,6 @@
 	<br>
 	
 	<div class="nav-area" align="center">
-	
 		<div class="menu"><a href="<%= contextPath %>/">HOME</a></div>
 		<div class="menu"><a href="<%= contextPath %>/list.no">공지사항</a></div>
 		<div class="menu"><a href="<%= contextPath %>/list.bo?currentPage=1">일반게시판</a></div>

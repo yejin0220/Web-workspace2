@@ -1,15 +1,21 @@
 INDEX VERSION 1.131
+C:\Web-workspace2\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1136966443.index
+\CookieProject\src
 C:\Web-workspace2\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3787908455.index
 \JSP_Project\src
-C:\Web-workspace2\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\171750919.index
-\AjaxProject\src
 C:\Web-workspace2\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1261652606.index
 \JSP_Project\src
-C:\Web-workspace2\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\203761796.index
-\JSP_Project\src
+C:\Web-workspace2\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3639319569.index
+\CookieProject\src
+C:\Web-workspace2\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\171750919.index
+\AjaxProject\src
+C:\Web-workspace2\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1182667841.index
+\WebSocketProject\src
 C:\Web-workspace2\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1943729604.index
 \JSP_Project\src
 C:\Web-workspace2\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\436020015.index
 \AjaxProject\src
 C:\Web-workspace2\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3728457815.index
+\JSP_Project\src
+C:\Web-workspace2\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\203761796.index
 \JSP_Project\src

@@ -1,6 +1,7 @@
 package com.kh.borard.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.kh.borard.model.service.BoardService;
 import com.kh.borard.model.vo.Attachment;
 import com.kh.borard.model.vo.Board;
+import com.kh.borard.model.vo.Reply;
 
 /**
  * Servlet implementation class boardDetailController
@@ -47,10 +49,11 @@ public class BoardDetailController extends HttpServlet {
 		if(result >0 ) {//조회수 증가 성공시 => 게시글 정보, 첨부파일을 조회해서 request영역안에 담은 후에, 상세 페이지로 포워딩
 			Board b = bService.selectBoard(boardNo);
 			Attachment at = bService.selectAttachment(boardNo);
+			ArrayList<Reply> list =bService.selectReplyList(boardNo);
 			
 			request.setAttribute("b", b);
 			request.setAttribute("at", at);
-			
+			request.setAttribute("list", list);
 			request.getRequestDispatcher("views/board/boardDetailView.jsp").forward(request, response);
 		
 		}else { //조회수 증가 실패시

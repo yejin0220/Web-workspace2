@@ -44,9 +44,5 @@ public class Message {
 	public String toString() {
 		return "Message [sender=" + sender + ", receiver=" + receiver + ", msg=" + msg + "]";
 	}
-
-
-	
-		
 	
 }

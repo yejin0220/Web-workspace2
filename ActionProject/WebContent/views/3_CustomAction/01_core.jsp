@@ -96,6 +96,7 @@ default 설정시 result값 : <c:out value="${result }" default="값이없음"/>
 <h3>2. 조건문-if (&lt; c:if test="조건" &gt;)</h3>
 <pre>
 -자바의 단일 if문과 비슷한 역할을 하는 태그
+-조건식은 EL표현식으로 작성해줘야함.
 -조건식을 test 속성의 속성값으로 작성(*****조건식은 무조건 EL표현식으로 작성해야함*****) -> 동등비교, 대소비교 등등
 -> if else/ if else if문이 없음
 </pre>
@@ -131,7 +132,8 @@ ${'10'*1>'2'*1  } <!-- int로 형변환 불가, 자동형변환 진행해줘야�
 <h3>3. 조건문 - choose(&lt; c:choose &gt; , &lt; c:when &gt;, &lt; c:otherwise &gt;)</h3>
 <pre>
 -JAVA의 if-else/if-else if문 또는 switch문과 비슷한 역할을 하는 태그
--각 조건들을 c:choose태그의 하위요소로 c:when(== else if), c:otherwise(==else)를 통해서 작성
+-조건식은 EL표현식으로 작성해줘야함.
+-각 조건들을 c:choose태그의 하위요소로 c:when(== if/else if), c:otherwise(==else)를 통해서 작성
 </pre>
 
 <c:choose>
@@ -234,6 +236,65 @@ for loop문 - (&lt; c:forEach var="변수명" begin="초기값" end="끝값" ste
 		</c:otherwise>
 	</c:choose>
 </table>
+
+<h3>5.반복문 - forToken</h3>
+<pre>
+&lt; c:forTokens vat="각값을 보관할 변수" items="분리시키고자 하는 문자열" delims="구분자" &gt;
+-구분자를 통해서 분리된 각각의 문자열에 접근하면서 반복을 수행
+-JAVA의 split("구분자") 혹은 StringTokenizer와 비슷한 역할을 수행하는 태그
+</pre>
+
+<c:set var="device" value="컴퓨터,핸드폰,TV,에어컨,냉장고.세탁기/비데"/>
+
+<ul>
+	<c:forTokens var="d" items="${device }" delims=",./">
+		<li>${d }</li>
+	</c:forTokens>
+</ul>
+
+<h3>6. 쿼리스트링 관련 태그 - url, param</h3>
+<pre>
+&lt; c:url var="변수명" value="요청할 url주소"&gt;
+	
+	&lt; c:param name="키값" value="밸류값" &gt;
+	&lt; c:param name="키값" value="밸류값" &gt;
+	&lt; c:param name="키값" value="밸류값" &gt;
+	....
+&lt;/ c:url &gt; 
+
+-url경로를 생성을 하고, 쿼리스트링을 정의할 수 있는 태그
+-넘겨줘야 할 쿼리스트링이 길 경우, 사용하면 편리함
+-특정조건에 따라 파라미터값을 다르게 보내야할 때 자주사용됨
+</pre>
+
+<c:set var="contextPath" value="<%=request.getContextPath() %>" />
+
+<a href="${contextPath }/list.do?currentPage=1&num=4">기존방식</a>  <br>
+
+<c:url var="query" value="list.do">
+	<c:param name="currentPage">1</c:param>
+	<c:param name="num" value="4"/>
+</c:url>
+
+<a href="${contextPath }/${query}">c:url을 이용한 방식</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

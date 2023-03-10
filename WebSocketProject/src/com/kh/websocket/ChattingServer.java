@@ -1,6 +1,6 @@
 package com.kh.websocket;
 
-import java.io.IOException;
+import java.io.IOException; 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -10,7 +10,7 @@ import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
-
+ 
 // 일반클래스를 웹소켓 서버로 등록하기 위한 방법
 @ServerEndpoint(value="/chatting.do")// 클래스 선언부에 선언시 웹소켓 서버로 등록이됨
 public class ChattingServer {

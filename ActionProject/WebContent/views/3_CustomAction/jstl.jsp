@@ -42,14 +42,24 @@
 	<a href="01_core.jsp">core.jsp</a>	
 	
 	
+	<h4>2. JSTL Formatting Library</h4>
+	<p>
+		숫자, 날짜 및 시간데이터 출력형식을 지정할 때 사용하는 문법을 제공
+	</p>
+	
+	<a href="02_formatting.jsp">formatting Library</a>
 	
 	
 	
+	<h4>3. JSTL Function Library</h4>
+	<p>
+		EL 구문 안에서 사용할 수 있는 메소드를 제공
+	</p>
+	<a href="03_functions.jsp">function Library</a>
 	
 	
-	
-	
-	
+	<h4>4. 그 외 태그들</h4>
+	<a href="04_other.jsp">그외태그</a>
 	
 	
 	
